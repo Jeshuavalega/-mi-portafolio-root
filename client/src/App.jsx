@@ -1,19 +1,43 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import Projects from "./pages/Projects";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import MainLayout from "./layout/MainLayout";
 
 function App() {
-  const [message, setMessage] = useState("Cargando...");
+  const [serverStatus, setServerStatus] = useState("Cargando...");
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/health`)
+    const APPI_URL = import.meta.env.VITE_API_URL;
+
+    fetch(`${APPI_URL}/health`)
       .then((res) => res.json())
-      .then((data) => setMessage(data.server))
-      .catch(() => setMessage("Error al conectar"));
+      .then((data) => {
+        setServerStatus(
+          `Server status: ${data.server} | Status: ${data.status}`
+        );
+      })
+      .catch((error) => {
+        setServerStatus("Error al conectar");
+      });
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 text-3xl font-bold">
-      {message === "on" ? "Server ON" : message}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* Definimos una sola ruta principal para el Layout */}
+        <Route element={<MainLayout />}>
+          {/* Todas las rutas anidadas usarán el MainLayout */}
+          <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
