@@ -15,9 +15,7 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 w-full bg-primary z-50 shadow-md">
-      {/* CAMBIO CLAVE: Aumentar el padding vertical a py-6 */}
       <Container className="flex justify-between items-center py-6">
-        {/* Logo/Nombre */}
         <Link
           to="/"
           className="text-xl font-bold text-secondary tracking-wider hover:text-accent transition-colors"
@@ -26,7 +24,6 @@ const Header = () => {
           Jeshua Valega.
         </Link>
 
-        {/* Desktop Menu */}
         <nav
           className="hidden md:flex space-x-8"
           aria-label="Navegación principal"
@@ -48,7 +45,6 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Mobile Button */}
         <button
           className="md:hidden text-secondary p-2"
           onClick={() => setIsOpen(!isOpen)}
@@ -59,7 +55,6 @@ const Header = () => {
         </button>
       </Container>
 
-      {/* Mobile Menu (Dropdown) */}
       {isOpen && (
         <nav
           className="md:hidden absolute top-full w-full bg-neutral-bg shadow-lg py-2"
